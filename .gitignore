@@ -1,0 +1,9 @@
+*.pyc
+*.pyo
+*.swp
+.vscode
+.cache
+.coverage
+
+.idea/
+venv/
