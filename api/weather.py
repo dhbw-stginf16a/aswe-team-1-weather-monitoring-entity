@@ -5,12 +5,23 @@ import json
 
 from api.models.prefstore import getAPItoken
 import requests
+import re
 
 logger = logging.getLogger(__name__)
 
-def requestFromLocation(location, url, params = "", apiToken=getAPItoken()):
+def requestFromLocation(location, endpoint, params = dict(), apiToken=getAPItoken()):
     # Analyse what has to be queried q or zip
-    return requests.get("http://" + url + '?q=' + location + '&APPID=' + apiToken + (("&" + params) if params != "" else ""))
+    if type(params) is not dict:
+        raise BaseException("Expect dictionary for params")
+    params['appid'] = apiToken
+    zipCode = re.compile("\d*,.*")
+    if zipCode.fullmatch(location):
+        params['zip'] = location
+    else:
+        params['q'] = location
+
+    url = "https://api.openweathermap.org/data/2.5/" + endpoint
+    return requests.get(url, params)
 
 def getCurrentWeather(body):
     location = body['payload']['location']
@@ -18,7 +29,7 @@ def getCurrentWeather(body):
         logger.debug("Unknown request type: " + body['type'])
         raise BaseException("Unknown request type")
 
-    data = requestFromLocation(location, 'api.openweathermap.org/data/2.5/weather')
+    data = requestFromLocation(location, 'weather')
 
     response = {
         'type': body['type'],
