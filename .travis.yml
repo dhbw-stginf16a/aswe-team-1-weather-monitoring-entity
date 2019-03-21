@@ -1,6 +1,6 @@
 language: python
 python:
-    - '3.6'
+    - "3.6"
 services:
     - docker
 install:
@@ -16,7 +16,7 @@ deploy:
     on:
         branch: master
         tags: true
-    env:
-global:
-    - DOCKER_USERNAME=thorekr
-    - secure: tP/EP8m4uIooUcfJmr9WCDdox3aQOzXODCtWt1amStNyhetlst7B+SvQakQOfCxmgoiZj6BmsIPIlKJ7Kj5kqS0gfq/+A4CczvabjQ9qB2LWaXNe/PEolSittv1AgmRlY5EIjEqlXIJIXXqfn2fDVlLZfhZSLyPVHJ4oIbRQJXmR7RBFrLb4NDi5Y9LC5GTVkFfK9/VjD2GpG08gCmAePYxh2m3pV82vdVpksfgiKMS7zK/s7/b5AePozZu2MOLkxIfqWagAnLujpLdb9LMzfNKRqnnv/oAk5sCbqYAA/9+bouTsoreXoVe+2DoURDVesG5Xze/nn1gZVQr+yomuGtykOfzayZuABeo3Z0OfYZezEmJXrg7W9bm99T7KJdKY3RE3VaHOhx9JCeXc/s8jJELblHZPhVJNvqiaA+D83Q0Mi9ciF2ylqGDDCpecbyKkh3NVjcIWnNRSwxGg5UxKavAbwCFZQrAKIfGSHh+BrXifJj6Ua71wQBcXOI9lfFFNvheotGwk+Df0mmep7LR5vxza/QEaMWj1uVawvRGR2ApGNMbKrhOl6Cq6OfDD0tLBDE5WzkJRbuSALVCQIOyj/h+AWl45xiALhVhnPY9RlPQehY+Bwz8v9FE/RiNHaV5e2Ew4g7zYe5K+cEqwjxEW56tUGNudZC0EoxJO5QNBDOU=
+env:
+    global:
+        - DOCKER_USERNAME=doriancz
+        - secure: CJDLWiaJtQAse1dyaoh019MYBVeVlVG3WuRIOCi/73P8WNH3xDt5hIbO8AI3AW/1oxLTHLSxxU2rSYCd79+AbmMEHHHmS2fi82li4SxFBEurSGMISJpRi08/a5PaoVrDLdz2AHk610d/U32BQDywfv0TUVg9fd64Ehfa2fBKGlcjzyFLG6eIzKDsUBTtR75GYXARCQNohVxmZo+sQLt0g++lZlM03PPlAa4943qyU27IO7a5J2TqLUd8ZLpiwsBqFpe0k1QQVOy59mip8F+WVK3tIS3c/RXH7m6Gb0OB0CF8TVIY8d0SZIQOTFd9tQMXEDhfxqNKKSqHxVf1/+m4Vz3tVbXaPe5KUmekWsWy5u70BcKNvgV/kCzgLH6Yb1X0AKvg9CNE0M9YWHCOsj11p0oCD8o5yMd3tTkkk3kW3BN7KN9dDwxRzvvPwY0e0H9zxWScaJBqlTfCNckkCWrDwVDrMUt0fGISkA+hDrhHvHPIvNEGVM6FxZlVw6+55WzF+xMNBupkN0c0XrGy4YkTag/ZsoIIkEJeVBj76BmNIAlEOT0Ch+X+EftnRkooX4AgF+AH5mJn9oKrOUUhG314gBqnd0sPttxOk/cYEtan/cwsjMT43ID4zk5/R95PbZignW5n3kqj8BidH8LzEEPzp5ZOpj9BZrp4ijft5qKyA7w=
