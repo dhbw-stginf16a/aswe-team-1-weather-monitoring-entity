@@ -9,8 +9,10 @@ import re
 
 logger = logging.getLogger(__name__)
 
-def requestFromLocation(location, endpoint, params = dict(), apiToken=getAPItoken()):
+def requestFromLocation(location, endpoint, params = None, apiToken=getAPItoken()):
     # Analyse what has to be queried q or zip
+    if params is None:
+        params = dict()
     if type(params) is not dict:
         raise BaseException("Expect dictionary for params")
     params['appid'] = apiToken
