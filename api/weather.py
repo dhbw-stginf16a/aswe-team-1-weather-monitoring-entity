@@ -3,13 +3,13 @@
 import logging
 import json
 
-from api.models.prefstore import getAPItoken
 import requests
 import re
+from api.models.Configuration import CONFIG
 
 logger = logging.getLogger(__name__)
 
-def requestFromLocation(location, endpoint, params = None, apiToken=getAPItoken()):
+def requestFromLocation(location, endpoint, params = None, apiToken=CONFIG.getAPItoken()):
     # Analyse what has to be queried q or zip
     if params is None:
         params = dict()

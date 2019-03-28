@@ -3,15 +3,12 @@
 import logging
 
 import connexion
-import os
 from flask_cors import CORS
 from api.models.RegistrationThread import RegistrationThread
+from api.models.Configuration import CONFIG
 
 
 logger = logging.getLogger(__name__)
-
-CENTRAL_NODE_BASE_URL = os.environ.setdefault('CENTRAL_NODE_BASE_URL', 'http://localhost:8080/api/v1')
-OUR_URL = os.environ.setdefault('OWN_URL', 'http://localhost:5000')
 
 app = connexion.App(__name__, specification_dir='openapi/')
 app.add_api('openapi.yml')
@@ -25,5 +22,5 @@ application = app.app
 
 logger.info('App initialized')
 
-app.registerThread = RegistrationThread(CENTRAL_NODE_BASE_URL, OUR_URL)
+app.registerThread = RegistrationThread(CONFIG.CENTRAL_NODE_BASE_URL, CONFIG.OUR_URL)
 app.registerThread.start()
