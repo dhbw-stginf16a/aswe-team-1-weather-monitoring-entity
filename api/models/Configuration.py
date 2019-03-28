@@ -15,7 +15,7 @@ class Config:
         if not self.readApiToken:
             try:
                 from api.models.prefstore import PREFSTORE_CLIENT
-                self.apiToken = PREFSTORE_CLIENT.get_global_pref()['weather_api_token']
+                self.apiToken = PREFSTORE_CLIENT.get_global_pref()['weather_monitor/api_token']
                 self.readApiToken = True
             except:
                 self.readApiToken = True
