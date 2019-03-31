@@ -16,6 +16,7 @@ def requestFromLocation(location, endpoint, params = None, apiToken=CONFIG.getAP
     if type(params) is not dict:
         raise BaseException("Expect dictionary for params")
     params['appid'] = apiToken
+    params['units'] = "metric"
     zipCode = re.compile("\d*,.*")
     if zipCode.fullmatch(location):
         params['zip'] = location
