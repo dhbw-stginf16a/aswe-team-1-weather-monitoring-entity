@@ -5,6 +5,7 @@ import json
 
 import requests
 import re
+import datetime
 from api.models.Configuration import CONFIG
 
 logger = logging.getLogger(__name__)
@@ -26,18 +27,31 @@ def requestFromLocation(location, endpoint, params = None, apiToken=CONFIG.getAP
     url = "https://api.openweathermap.org/data/2.5/" + endpoint
     return requests.get(url, params)
 
+def requestForecast(location, time):
+    requestedTime = datetime.datetime.utcfromtimestamp(time)
+    assert requestedTime > datetime.datetime.utcnow()
+    data = json.loads(requestFromLocation(location, 'forecast').text)
+    for item in reversed(data['list']):
+        if requestedTime > datetime.datetime.utcfromtimestamp(item['dt']):
+            return item
+    return data['list'][0]
+
 def getCurrentWeather(body):
     location = body['payload']['location']
-    if not body['type'] == 'weather_current':
-        logger.debug("Unknown request type: " + body['type'])
-        raise BaseException("Unknown request type")
-
-    data = requestFromLocation(location, 'weather')
+    data = ""
+    if body['type'] == 'weather_current':
+        data = json.loads(requestFromLocation(location, 'weather').text)
+    elif body['type'] == 'weather_forecast':
+        time = body['payload']['time']
+        data = requestForecast(location, int(time))
+    else:
+        logger.error("Unknown request type: " + body['type'])
+        return {"error":"Unknown request type: " + body['type']}, 404
 
     response = {
         'type': body['type'],
         'payload': {
-            'data': json.loads(data.text)
+            'data': data
         }
     }
 
