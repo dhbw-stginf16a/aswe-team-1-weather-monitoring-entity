@@ -24,9 +24,6 @@ class TestConnexion:
         forecastStuff = {
             "list":[
                 {
-                    "dt": "1554112800"
-                },
-                {
                     "dt": "1554113800"
                 },
                 {
@@ -34,6 +31,9 @@ class TestConnexion:
                 },
                 {
                     "dt": "1554115800"
+                },
+                {
+                    "dt": "1554116800"
                 }
             ]
         }

@@ -67,5 +67,5 @@ class TestRequest(TestConnexion):
             }
             response = client.post('api/v1/request', json=request)
             assert response.status_code == 200
-            assert int(response.json[0]['payload']['data']['dt']) < requestTime
+            assert int(response.json[0]['payload']['data']['dt']) < requestTime or i == 0
             requestTime+= 1000
