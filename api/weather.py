@@ -14,8 +14,7 @@ def requestFromLocation(location, endpoint, params = None, apiToken=CONFIG.getAP
     # Analyse what has to be queried q or zip
     if params is None:
         params = dict()
-    if type(params) is not dict:
-        raise BaseException("Expect dictionary for params")
+    assert type(params) is not dict
     params['appid'] = apiToken
     params['units'] = "metric"
     zipCode = re.compile("\d*,.*")
@@ -32,7 +31,7 @@ def requestForecast(location, time):
     assert requestedTime > datetime.datetime.utcnow()
     data = json.loads(requestFromLocation(location, 'forecast').text)
     for item in reversed(data['list']):
-        if requestedTime > datetime.datetime.utcfromtimestamp(item['dt']):
+        if requestedTime > datetime.datetime.utcfromtimestamp(int(item['dt'])):
             return item
     return data['list'][0]
 

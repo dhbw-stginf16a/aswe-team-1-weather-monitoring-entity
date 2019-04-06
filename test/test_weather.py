@@ -12,34 +12,24 @@ class TestRequest(TestConnexion):
     """
 
     @pytest.fixture(scope='function')
-    def test_getEventsDay(self, client):
+    def test_getWeatherCurrent(self, client):
         request = {
             'type': 'weather_current',
             'payload': {
-                'user': 'AntonHynkel',
-                'date': '2007-11-01'
+                'location':  'Stuttgart, de'
             }
         }
 
         response = client.post('api/v1/request', json=request)
-
         assert response.status_code == 200
-
-    def test_getEventsTimerange(self, client):
         request = {
-            'type': 'event_timerange',
+            'type': 'weather_current',
             'payload': {
-                'user': 'AntonHynkel',
-                'startDate': '2007-01-01',
-                'endDate':  '2007-12-31'
+                'location':  '04455, de'
             }
         }
-
         response = client.post('api/v1/request', json=request)
-
         assert response.status_code == 200
-        print(response.get_json())
-
 
     @freeze_time("2019-04-01 10:00:00") # UTC Timestamp: 1554112800
     def test_getOutdatedForecast(self, client):
@@ -53,3 +43,19 @@ class TestRequest(TestConnexion):
         response = client.post('api/v1/request', json=request)
 
         assert response.status_code == 500
+
+    @freeze_time("2019-04-01 10:00:00") # UTC Timestamp: 1554112800
+    def test_getForecast(self, client):
+        requestTime = 1554112900
+        for i in range(5):
+            request = {
+                'type': 'weather_forecast',
+                'payload': {
+                    'time': str(requestTime),
+                    'location':  'Stuttgart, de'
+                }
+            }
+            response = client.post('api/v1/request', json=request)
+            assert response.status_code == 200
+            assert int(response.json[0]['payload']['data']['dt']) < requestTime
+            requestTime+= 1000

@@ -17,6 +17,31 @@ class TestConnexion:
             "weather_monitor/api_token": self.WEATHER_API_TOKEN
         }
 
+        weatherApi = {
+            "dummy": "dummy"
+        }
+
+        forecastStuff = {
+            "list":[
+                {
+                    "dt": "1554112800"
+                },
+                {
+                    "dt": "1554113800"
+                },
+                {
+                    "dt": "1554114800"
+                },
+                {
+                    "dt": "1554115800"
+                }
+            ]
+        }
+
         requests_mock.get(f'{self.CENTRAL_NODE_BASE_URL}/preferences/global/', status_code=200, json=globalPrefs)
+        requests_mock.get(f'https://api.openweathermap.org/data/2.5/weather', status_code=200, json=weatherApi)
+        requests_mock.get(f'https://api.openweathermap.org/data/2.5/forecast', status_code=200, json=forecastStuff)
+        requests_mock.post(f'{self.CENTRAL_NODE_BASE_URL}/monitoring', text='', status_code=204)
         with app.app.test_client() as c:
             yield c
+            app.registerThread.stop()
