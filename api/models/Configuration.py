@@ -18,8 +18,9 @@ class Config:
                 self.apiToken = PREFSTORE_CLIENT.get_global_prefs()['weather_monitor/api_token']
                 self.readApiToken = True
             except:
+                self.apiToken = os.environ.setdefault('API_KEY', None)
                 self.readApiToken = True
-                raise BaseException("Failed to read API Token")
+                assert self.apiToken is not None
         return self.apiToken
 
 

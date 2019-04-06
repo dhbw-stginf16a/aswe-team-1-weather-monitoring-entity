@@ -10,10 +10,12 @@ from api.models.Configuration import CONFIG
 
 logger = logging.getLogger(__name__)
 
-def requestFromLocation(location, endpoint, params = None, apiToken=CONFIG.getAPItoken()):
+def requestFromLocation(location, endpoint, params = None, apiToken=None):
     # Analyse what has to be queried q or zip
     if params is None:
         params = dict()
+    if apiToken is None:
+        apiToken = CONFIG.getAPItoken()
     assert type(params) is dict
     params['appid'] = apiToken
     params['units'] = "metric"
