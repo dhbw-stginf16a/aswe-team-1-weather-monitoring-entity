@@ -11,6 +11,17 @@ class TestRequest(TestConnexion):
     """A test to get events from the calendar api
     """
 
+    def test_failOnUnknownRequestType(self, client):
+        request = {
+            'type': 'asdf',
+            'payload': {
+                'location':  'Stuttgart, de'
+            }
+        }
+
+        response = client.post('api/v1/request', json=request)
+        assert response.status_code == 404
+
     def test_getWeatherCurrent(self, client):
         request = {
             'type': 'weather_current',
