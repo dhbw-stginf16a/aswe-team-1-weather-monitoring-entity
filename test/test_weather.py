@@ -11,7 +11,6 @@ class TestRequest(TestConnexion):
     """A test to get events from the calendar api
     """
 
-    @pytest.fixture(scope='function')
     def test_getWeatherCurrent(self, client):
         request = {
             'type': 'weather_current',

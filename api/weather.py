@@ -14,7 +14,7 @@ def requestFromLocation(location, endpoint, params = None, apiToken=CONFIG.getAP
     # Analyse what has to be queried q or zip
     if params is None:
         params = dict()
-    assert type(params) is not dict
+    assert type(params) is dict
     params['appid'] = apiToken
     params['units'] = "metric"
     zipCode = re.compile("\d*,.*")
