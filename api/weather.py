@@ -60,4 +60,4 @@ def getCurrentWeather(body):
         return [response], 200
     except BaseException as e:
         logger.error("An error occurred: " + str(e))
-        return {"error":"Internal server error: " + str(e)}, 500
+        return [{"error":"Internal server error: " + str(e)}], 500
