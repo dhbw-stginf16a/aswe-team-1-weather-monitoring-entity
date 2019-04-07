@@ -59,5 +59,6 @@ def getCurrentWeather(body):
 
         return [response], 200
     except BaseException as e:
-        logger.error("An error occurred: " + str(e))
-        return [{"error":"Internal server error: " + str(e)}], 500
+        logger.error("An error occurred: " + repr(e))
+        logger.error("The following request was handled: " + repr(body))
+        return [{"error":"Internal server error: " + repr(e)}], 500
