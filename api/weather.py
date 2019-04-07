@@ -16,7 +16,7 @@ def requestFromLocation(location, endpoint, params = None, apiToken=None):
         params = dict()
     if apiToken is None:
         apiToken = CONFIG.getAPItoken()
-    assert type(params) is dict
+    assert type(params) is dict, "Wrong use of requestFromLocation"
     params['appid'] = apiToken
     params['units'] = "metric"
     zipCode = re.compile("\d*,.*")
@@ -30,7 +30,7 @@ def requestFromLocation(location, endpoint, params = None, apiToken=None):
 
 def requestForecast(location, time):
     requestedTime = datetime.datetime.utcfromtimestamp(time)
-    assert requestedTime > datetime.datetime.utcnow()
+    assert requestedTime > datetime.datetime.utcnow(), "Requested time is in past"
     data = json.loads(requestFromLocation(location, 'forecast').text)
     for item in reversed(data['list']):
         if requestedTime > datetime.datetime.utcfromtimestamp(int(item['dt'])):
