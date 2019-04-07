@@ -19,7 +19,7 @@ class Config:
                 self.readApiToken = True
             except:
                 self.apiToken = os.environ.get('API_KEY')
-                assert self.apiToken is not None
+                assert self.apiToken is not None, "The API_KEY seems to be missing"
         return self.apiToken
 
 

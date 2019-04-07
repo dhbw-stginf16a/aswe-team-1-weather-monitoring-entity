@@ -38,22 +38,26 @@ def requestForecast(location, time):
     return data['list'][0]
 
 def getCurrentWeather(body):
-    location = body['payload']['location']
-    data = ""
-    if body['type'] == 'weather_current':
-        data = json.loads(requestFromLocation(location, 'weather').text)
-    elif body['type'] == 'weather_forecast':
-        time = body['payload']['time']
-        data = requestForecast(location, int(time))
-    else:
-        logger.error("Unknown request type: " + body['type'])
-        return {"error":"Unknown request type: " + body['type']}, 404
+    try:
+        location = body['payload']['location']
+        data = ""
+        if body['type'] == 'weather_current':
+            data = json.loads(requestFromLocation(location, 'weather').text)
+        elif body['type'] == 'weather_forecast':
+            time = body['payload']['time']
+            data = requestForecast(location, int(time))
+        else:
+            logger.error("Unknown request type: " + body['type'])
+            return {"error":"Unknown request type: " + body['type']}, 404
 
-    response = {
-        'type': body['type'],
-        'payload': {
-            'data': data
+        response = {
+            'type': body['type'],
+            'payload': {
+                'data': data
+            }
         }
-    }
 
-    return [response], 200
+        return [response], 200
+    except BaseException as e:
+        logger.error("An error occurred: " + str(e))
+        return {"error":"Internal server error: " + str(e)}, 500
