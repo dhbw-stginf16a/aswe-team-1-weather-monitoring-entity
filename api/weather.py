@@ -30,7 +30,10 @@ def requestFromLocation(location, endpoint, params = None, apiToken=None):
 
 def requestForecast(location, time):
     requestedTime = datetime.datetime.utcfromtimestamp(time)
-    assert requestedTime > datetime.datetime.utcnow(), "Requested time is in past"
+    #assert requestedTime > datetime.datetime.utcnow(), "Requested time is in past"
+    if requestedTime > datetime.datetime.utcnow():
+        print("Requested time is in past, using current time")
+        requestedTime = datetime.datetime.utcnow()
     data = json.loads(requestFromLocation(location, 'forecast').text)
     for item in reversed(data['list']):
         if requestedTime > datetime.datetime.utcfromtimestamp(int(item['dt'])):
